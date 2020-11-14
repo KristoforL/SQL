@@ -15,7 +15,7 @@ SELECT * FROM employees WHERE EXISTS (SELECT * FROM projects WHERE projects.empl
 
 SELECT * FROM students WHERE age BETWEEN 6 AND 10
 
-SELECT CONCAT (firstname, ' ',lastname) AS FULLNAME FROM students;
+SELECT CONCAT(firstname, ' ',lastname) AS FULLNAME FROM students;
 
 SELECT CURRENT_DATE + INTERVAL 7 AS week;
 
@@ -68,3 +68,5 @@ delete from students2 where studentid = 60;
 
 delete from students2;
 
+SELECT NOW();
+SELECT CURRENT_DATE();
