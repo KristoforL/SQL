@@ -205,3 +205,73 @@ Derived tables or inline views
 select name, title from (select e.name, e.jobtitle, p.title from employees as e inner join projects as p on e.employeeid = p.employeeid) as active_projects;
 
 select * from active_projects;
+
+
+/*
+SQL Fucntions
+
+aggregate functions: works on groups of wors to return single aggregate result value
+
+scalar functions: wonks on a single input value to return single result value
+*/
+
+select count(*) from students; /*Counts all the rows*/
+
+select count(Distinct class) from students;/*Counts all thhe ditinct values in class row */
+
+
+select count(p.title) from employees as e left outer join projects as p on e.employeeid = p.employeeid order by title desc;/*counts all the titles that the project table returns when left outer join in used*/
+
+
+
+
+select * from students limit 1;/*Returns the first item from the query and can also be used to limit it to more as seen below*/
+select * from students limit 5;
+
+/*
+You can reverse the above just by order by desc order before the limit clause
+*/
+
+select firstname, lastname from students order by firstname desc limit 5;
+
+
+/*
+Sum() function
+sum used with stringcolumns will return 0 value
+*/
+
+select sum(age) from students;
+select sum(salary) from employees;
+
+
+/*
+Min() function and Max() function
+
+Unlike sum this works with strings as well. When useing it min on strings it sorts them dictionary style and then returns the string
+*/
+
+select min(firstname) from students;
+select max(firstname) from students;
+select max(age) from students;
+
+/*
+AVG() function: averages the amount from column and returns 0 from strings
+*/
+
+select avg(salary) as avg_salary from employees;
+
+
+/*
+
+UCASE AND LCASE()
+UCASE(): turns all charcaters to upper case and only works with strings
+
+Has to be seperate for multiplte columns in 
+
+LCASE(): Turns all the characters to lowercase
+*/
+
+ucase(firstname) from students;
+select ucase(firstname), ucase(lastname) from students;
+
+select lcase(firstname), lcase(lastname) from students;
