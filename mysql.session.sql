@@ -210,11 +210,17 @@ select * from active_projects;
 /*
 SQL Fucntions
 
-aggregate functions: works on groups of wors to return single aggregate result value
+aggregate functions: works on groups of rows to return single aggregate result value
 
-scalar functions: wonks on a single input value to return single result value
+scalar functions: works on a single input value to return single result value
 */
 
+
+/*
+Count()
+
+does not count nulls
+*/
 select count(*) from students; /*Counts all the rows*/
 
 select count(Distinct class) from students;/*Counts all thhe ditinct values in class row */
@@ -285,6 +291,8 @@ select mid(firstname, 1, 3) from students;/*Declare function, starting point, en
 /*
 len() function: only available in windows azure
 length() function for mysql
+
+only works on strings
 */
 
 select firstname, length(firstname) as name_length from students;
