@@ -70,3 +70,124 @@ delete from students2;
 
 SELECT NOW();
 SELECT CURRENT_DATE();
+
+/*
+Joining
+
+inner join: Reurns all data rows where at least one match in both tables
+    select <columns or all> from table Inner join <table> on <table.column> = <table2.column>;
+
+    can also use alias for the columns if they are ambiguous so that they are distinct
+
+outer join:Returns matched as well as unmatched data
+
+
+left outer: All data rows from left table are returned. Left table is the table after from to left of outer join clause
+
+        select * from table1 left outer join table2 on table1.column1 = table2.column2;
+
+        so table2 is limited by how many entries are in table1
+
+right outer: essentially the opposite left and joins on the right table or the table after the right outer join clause
+
+        select * from table1 left outer join table2 on table1.column1 = table2.column2;
+
+        so table1 is limited by how many entries are in table 2
+
+full outer: shows all data rows are written. MYSQL Does not support it so I have to use union instead
+
+        select * from table1 left outer join table2 on table1.column1 = table2.column2 union select * from table1 right outer join table2 on table1.column1 = table2.column2;
+
+crossjoin: does not use on clause and all rows are written joined to evrywhere regardless of if they match
+
+        Should yield similar results despite which is first 
+
+
+*/
+select * from table1 inner join table2 on table1.column1 = table2.column2;
+
+select customers.userid, name, phone, items, total from customers inner join orders on customers.userid = orders.userid;
+
+select c.userid, c.name, c.phone, o.items, o.total from customers as c inner join orders as o on c.userid = o.userid;
+
+
+/*
+Left outer join
+*/
+select * from table1 left outer join table2 on table1.column1 = table2.column2;
+
+ select name, jobtitle, title from employees left outer join projects on employees.employeeid = projects.employeeid order by title desc;
+
+ select c.userid, c.name, c.phone, o.items, o.total from customers as c left outer join orders as o on c.userid = o.userid;
+
+/*
+Right outer join
+*/
+
+
+ select * from table1 right outer join table2 on table1.column1 = table2.column2;
+
+select c.userid, c.name, c.phone, o.items, o.total from customers as c right outer join orders as o on c.userid = o.userid order by name desc;
+
+select name, jobtitle, title from employees right outer join projects on employees.employeeid = projects.employeeid;
+
+
+/*
+full outer join
+
+Because MYSQL does not support this we will have to left and right join in conjunction with a union
+*/
+
+/*
+Can't use this in MYSQL
+*/
+select * from table1 full outer join table2 on table1.column1 = table2.column2;
+/*
+Instead
+*/
+select * from table1 left outer join table2 on table1.column1 = table2.column2 union select * from table1 right outer join table2 on table1.column1 = table2.column2;
+
+
+/*
+Cross join
+*/
+
+select e.name, e.jobtitle, p.title from employees as e cross join projects as p;
+
+/*
+Union: must have similar number of columns
+
+union also joins two select statements adn we display duplicates
+*/
+select * from table1 union select * from table2;
+
+select * from table1 union all select * from table2 order by column1;
+
+
+/*
+SQL VIEWs is a virtual table and can be used to restrict data from user for security purposes
+
+views are created and viewed as selected
+
+create view test ...;
+
+select * from test;
+
+
+You can update the view as well wit the create or replace
+
+Can be deleted as well with delete keyword
+
+*/
+
+create view active_projects as select e.name, e.jobtitle, p.title from employees as e inner join projects as p on e.employeeid = p.employeeid;
+
+select * from active_projects;
+
+create view purchase_history as select c.userid, c.name, c.phone, o.items, o.total from customers as c left outer join orders as o on c.userid = o.userid order by name desc;
+
+select * from purchase_history;
+
+create or replace view purchase_history as select c.userid, c.name, c.phone, o.items, o.total from customers as c right outer join orders as o on c.userid = o.userid order by name desc;
+
+select * from purchase_history;
