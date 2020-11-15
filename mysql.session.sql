@@ -191,3 +191,17 @@ select * from purchase_history;
 create or replace view purchase_history as select c.userid, c.name, c.phone, o.items, o.total from customers as c right outer join orders as o on c.userid = o.userid order by name desc;
 
 select * from purchase_history;
+
+
+/*
+Derived tables or inline views
+- sub query in parenthesis
+- shows the view upon execution of the query and with that you can see what rows you want to see
+- you name the view/table at the in with the as clause
+- 
+
+*/
+
+select name, title from (select e.name, e.jobtitle, p.title from employees as e inner join projects as p on e.employeeid = p.employeeid) as active_projects;
+
+select * from active_projects;
