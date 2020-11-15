@@ -262,7 +262,6 @@ select avg(salary) as avg_salary from employees;
 
 
 /*
-
 UCASE AND LCASE()
 UCASE(): turns all charcaters to upper case and only works with strings
 
@@ -275,3 +274,117 @@ ucase(firstname) from students;
 select ucase(firstname), ucase(lastname) from students;
 
 select lcase(firstname), lcase(lastname) from students;
+
+/*
+MID(): extracts from strings
+*/
+
+select mid(firstname, 1, 3) from students;/*Declare function, starting point, ending point(length) when the second parameter is not included it will print the rest of the string after the starting point*/
+
+
+/*
+len() function: only available in windows azure
+length() function for mysql
+*/
+
+select firstname, length(firstname) as name_length from students;
+
+
+/*
+Round() function: only works on numbers and rounds to nearest whole number
+
+ also has a parameter where you can decide how many decimals to round to
+*/
+
+select round(10.0456789);
+select round(10.5456789, 3)
+
+
+/*
+Format(): similar to round and only works on numbers
+Format returns results as a string though and not a float or integer
+*/
+
+select format(10.0456789);
+select format(10.5456789, 3)
+
+/*
+substring() function is similar to mid()
+uses slightly differnt syntax
+*/
+
+select substring(firstname from 2 for 2) from students;
+
+
+/*
+COALESCE() function returns first none null value from given list
+*/
+select coalesce(1,2,3);
+select coalesce(null,2,3);
+select coalesce(null,null,3);
+
+
+/*
+Char_lenght() functions returns length of given string value
+*/
+
+select char_length(firstname) from students;
+select firstname, char_length(firstname) as length from students;
+
+
+/*
+CAST() function: used to change the data type of a value
+*/
+
+select cast(10.456789 as signed);
+select cast(10 as decimal);
+select cast(10 as decimal(4,1));
+select cast(10.456789 as char(4));)
+
+/*
+Case() function and returns a value or null by evaluating a series of condition
+
+A do something while looking throuigh tables if condition is met else end the query
+
+Can be used with numbers and strings
+
+seimple case and searched case
+*/
+select case(3)
+    when 1 then 'one'
+    when 2 then 'two'
+    when 3 then 'three'
+    when 4 then 'four'
+    when 5 then 'five'
+    else 'no match'
+    end;
+
+
+select firstname, age, case
+    when (age = 5) then 'five'
+    when (age = 6) then 'six'
+    when (age = 7) then 'seven'
+    else null
+    end
+    as 'Age as text'
+    from students;
+
+
+/*
+Nullif() returna null if 2 paramter values are equal
+works with numbers and strings
+if not equal it will return first arguement
+*/
+
+select nullif(10,20);
+select nullif(10,10);
+select nullif(20,10);
+
+select nullif('xyz','abc');
+
+
+select table1.column1, table2.column2, nullif(table1.column1, table2.column2) from table1 left outer join table2 on table1.column1 = table2.column2 order by column1;
+
+/*
+
+*/
