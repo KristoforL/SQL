@@ -394,5 +394,50 @@ select nullif('xyz','abc');
 select table1.column1, table2.column2, nullif(table1.column1, table2.column2) from table1 left outer join table2 on table1.column1 = table2.column2 order by column1;
 
 /*
+DATA TYPES
+*/
+
+/*
+-Numerical, character, and temporal data types
+
+signed numbers are numbers including negatives and unsigned numbers are positve numbers only
+
+-numerical: numbers only
+integer/int: second largest range
+tinyint: -128>127
+smallint: -32768>32767
+mediumint: -8388608> 8388607
+bigint: Biggest range
+
+
+fixed point numbers: exact values floats, prices, small calculations and can be negative. Decimal and numeric data types are the only data types that use fixed numbers.
+
+decimal and numeric data types are same for storing data types
+
+floating point numbers: very very big or very very small numbers. Approximate values. Usually bigger than bigint or int values.
+Decimal(25,0)
+
+float, real and double precision:  float/real/double precision (M,D) m- number of digits and d- number digits in decimal
+
+-character: alphabets symbols and numbers
+
+char: required to enter the column width. Firstname char(20). Remaining spaces are just spaces behind the last character
+
+varchar: similar to char and stores dynamic width character columns but does not fill the spaces behind the last charcater so only stores the amount of characters you have plus one byte
+
+nchar/nvarchar: national and national variable character: similar to varchar and char but has a larger character set. Use unicode charcater sets like utf-8. 2 byte storage space for each charater as opposed to one byte in varchar and char
+
+clob and blob: character large object and binary large objects. Used to store very large data that can not be stored in char or varchar. clob and blob are used to store source text of the post in plain text, html, or xml.
+
+Clob used to store character data while blob is used to store binary data like images audio and video
+
+Mysql TEXT data type is similar ro clob
+
+
+-temporal: date time and timestamp
 
 */
+
+
+
+
