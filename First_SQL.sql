@@ -1,2 +1,0 @@
-use my_database;
-
