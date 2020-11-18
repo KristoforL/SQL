@@ -1,5 +1,8 @@
 SHOW DATABASES;
 
+describe <table> or explain <table>
+
+Alter table rename/add/modify/drop
 
 SELECT * FROM students WHERE (age > 6 AND firstname <> 'John');
 
@@ -439,5 +442,233 @@ Mysql TEXT data type is similar ro clob
 */
 
 
+/*
+Ways to alter the table and he columns within it
+*/
+alter table students2 rename students_two;
+
+alter table students_two add state varchar(20);
+
+alter table students_two modify column state varchar(50);
+
+alter table students_two drop column state;
+
+
+/*
+SQL contraints
+
+not null can be used for characters and numbers
+
+unique is useful to ensure duplicate data row value in given column is restricted.
+
+primary key: to restict of duplicate data row value in given column and there can only be on primary key in a table and cannot be null uses basic add and drop to add or remove the primary key
+*/
+
+alter table students modify column firstname varchar(40) null, modify lastname varchar(40) null;
+
+/*
+To remove the unique constraint is a little different than expected
+*/
+
+alter table subjects DROP INDEX title;
+
+/*
+Should be able to delete and add the primary keys like below
+*/
+alter table subjects drop primary key (title);
+alter table subjects add primary key title;
+
+/*
+Foreign key in a table always points to a primary key in another table
+
+
+
+*/
+
+alter table <table1> add constraint <FKcolumn1> foreign key (column1) references <table2>(column1)
+
+alter table teachers add constraint fk_subjectid foreign key (subjectid) references subjects(subjectid);
+
+update teachers set subjectid = 3 where teacherid =1;
+
+update itemcodes set itemcode = 'code1236' where itemid = 3;
+
+alter table teachers drop foreign key fk_subjectid;
+
+
+/*
+Check constraint: used to control value range that can be stored in a table column
+
+example below for azure or db that is not mysql
+
+ignored in mysql 
+*/
+
+create table <table1> (
+        column1 datatype,
+        column2 datatype,
+        check(column>1)
+);
+
+alter table table1 add constraint chk_column1 check(column1>0);
+
+/*
+Deafult constraint: set default value for data column and data row is not defined, it will be added in
+*/
+
+alter table students alter age set default 5;
+
+/*
+auto increment or sequence: generates and saves a unique number wvery time a new data row is inserted into table
+
+only used with numeric values
+
+mysql auto increments by 1
+*/
+
+/*
+Data control language:
+
+Grant and revoke
+
+*/
+
+grant privileges on database to user;
+
+grant all on *.* to kris;
+grant select, create on school.* to maker;
+ /*
+ Must select all privileges on a user table to see what the permissions each user has
+ */
+
+ select user, select_priv, update_priv, delete_priv, Create_priv from user;
+
+
+ /*
+ Transaction control language
+
+ ability to rollback
+
+ in case transaction fails you can revert or start from save point
+
+
+ start transaction: starts new transction
+
+ commit: completes and saves changes permenantly
+ insert update or delete
+ only after transaction statement
+ 
+ rollback:  must execute before commit. Reverts back the changes, after rollback
+
+ savepoint: rollback the chnages to save points
+ 
+ set autocommit: enable or disables default autocommit mode for current
+ */
+
+start transaction;
+update students set age = 6 where studentid = 1;
+commit;
+
+/*
+If you have not used commit then the changes will revert and can be checked by logging out and logging in to see if the information changed
+*/
+
+start transaction;
+update students set age = 6 where studentid = 1;
+rollback;
+
+
+/*
+Savepoint
+
+cannot rollback to a save point after commit statement
+*/
+
+start transaction;
+update clients set balance = (balance -100) where cid =1;
+update clients set balance = (balance +100) where cid =2;
+insert into t_details (t_message, t_Date) values ('John sent $100 to Mik' ,now());
+select * from clients;
+select * from t_details;
+savepoint sp1;
+update clients set balance = (balance -100) where cid =1;
+insert into t_details (t_message, t_Date) values ('John sent $100 to Mik' ,now());
+savepoint sp2;
+select * from clients;
+select * from t_details;
+rollback to sp1;
+select * from clients;
+select * from t_details;
+
+update clients set balance = 1000 where cid =1;
+update clients set balance = 100 where cid =2;
+insert into t_details (t_message, t_Date) values ('John sent $100 to Mik' ,now());
+select * from clients;
+select * from t_details;
+savepoint sp1;
+commit;
+
+
+/*
+
+set autocommit is enabled by default 
+
+disabled when setart transaction is queried
+0 is disabled 
+1 is enabled
+
+
+*/
+
+set autocommit=0;
+set autocommit=1;
+
+
+/*
+Database relationships
+
+one to one: one data in one table to one data in another table
+one id can only associate with one data in another table and are distinct to each other
+
+one to many: one data in a table to many data in another table
+one class can have many students so the class id will show up in many students agenda
+
+many to many: many data in table to many data in another table
+
+
+*/
+
+/*
+Database normalization: eliminates redundancies and store the data logically to make the data managament easier
+
+1NF: each colum must contain only one value and no table should store repeating groups of related data
+
+2NF: Must be in 1NF. It should not store duplicate rows in the same table. Duplicate values in the tow should be stored in their own separate tables and linked to the table using foreign keys. Create one to many relationship tables
+
+3NF: The DB is already in third normal form if it is in second normal form and every non key column is mutally independent. identify iterdependent columns and store them in their own separate tables
+*/
+
+/*
+SQL Export and import
+
+Cant be written as below and saved to any place and as any extenstion but should probably be a csv, text file, or sql file for importing reasons
+
+
+*/
+ /*saves tablea from DB*/
+mysqldump -uroot -p company > C:\backup\company.sql
+
+/*Backups database structure only*/
+mysqldump -uroot -p company > C:\backup\company.sql
+
+/*Saves all DBs and information*/
+mysqldump -uroot -p --all-databases > C:\BU\ALL.sql
+
+
+/*Importing*/
+
+/*Importing tables*/
+
+mysql -uroot -p school < "C:\BU\students.sql"
 
 
