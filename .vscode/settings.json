@@ -5,13 +5,13 @@
                 "authProtocol": "default"
             },
             "previewLimit": 50,
-            "server": "localhost",
+            "server": "192.168.0.123",
             "port": 3306,
             "askForPassword": true,
             "driver": "MySQL",
-            "name": "mysql",
-            "database": "mysql",
-            "username": "root"
+            "database": "bank",
+            "username": "root",
+            "name": "HomeDB"
         }
     ]
 }
