@@ -12,6 +12,19 @@
             "database": "bank",
             "username": "root",
             "name": "HomeDB"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "askForPassword": true,
+            "driver": "MySQL",
+            "name": "local",
+            "database": "mysql",
+            "username": "root"
         }
     ]
 }
